@@ -5,7 +5,7 @@ def parser(expression):
     biconditional_flag = 0
     for character in expression:
         if character.islower() or character.isupper():
-            tokens.append('variable')
+            tokens.append('VAR')
         elif character == '!':
             tokens.append('!')
         elif character == '|':
