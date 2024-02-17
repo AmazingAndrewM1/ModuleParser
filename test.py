@@ -30,8 +30,10 @@ def tokenizer(expression):
 
 
 def main():
-    tokens = tokenizer("(A & b) <=> c t")
-    print(tokens)
+    while True:
+        userInput = input()
+        tokens = tokenizer(userInput)
+        print(tokens)
 
 if __name__ == "__main__":
     main()
