@@ -4,7 +4,7 @@ def parser(expression):
     conditional_flag = 0
     biconditional_flag = 0
     for character in expression:
-        if character.islower():
+        if character.islower() or character.isupper():
             tokens.append('variable')
         elif character == '!':
             tokens.append('!')
@@ -28,13 +28,16 @@ def parser(expression):
         elif character == '>' and biconditional_flag == 2:
             tokens.append('<=>')
             biconditional_flag = 0
+        elif character.isspace():
+            pass
         else:
             raise Exception(f"Invalid Character Input: {character}")
     return tokens
 
 
 def main():
-    print(parser("(a&b)<=>!c"))
+    tokens = parser("(A & b) <= c")
+    print(tokens)
 
 if __name__ == "__main__":
     main()
