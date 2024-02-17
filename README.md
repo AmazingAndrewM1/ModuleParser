@@ -5,5 +5,5 @@
 
 Then, run `flask run` to start the server. \\
 
-Then, go to `localhost:5000` to see it in the browser.
+Then, type the URL `localhost:5000` in your favorite browser to view the webpage.
 
