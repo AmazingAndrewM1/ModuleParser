@@ -3,11 +3,13 @@ import numpy as np
 class leaf():
     def __init__(self, value):
         self.value = value
+        self.bool = None
 
 
 class unaryNode():
     def __init__(self, value):
         self.value = value
+        self.bool = None
         self.child = None
 
     def setChild(child_node):
@@ -16,6 +18,7 @@ class unaryNode():
 class binaryNode():
     def __init__(self, value):
         self.value = value
+        self.bool = None
         self.left_child = None
         self.right_child = None
 
@@ -31,6 +34,7 @@ class Parser:
         self.offset = ''
         self.variable_list = self.unique_variable_tokens()
         self.truth_table = self.create_truth_table()
+        self.populate_truth_table()
         self.expression()
         if len(self.tokens) > 0:
             raise ValueError("The parser completed without reading all of the tokens")
@@ -76,6 +80,17 @@ class Parser:
     def create_truth_table(self):
         truth_table = np.zeros((2 ** len(self.variable_list), len(self.variable_list) + 1))
         return truth_table
+    
+    def populate_truth_table(self):
+        binary_numbers = []
+        for i in range(2 ** len(self.variable_list)):
+            binary_numbers.append(format(i, '0' + str(len(self.variable_list)) + 'b'))
+
+        for i, binary in enumerate(binary_numbers):
+            for j, bit in enumerate(binary):
+                self.truth_table[i, j] = int(bit)
+        print(self.truth_table)
+    
 
 
                             
