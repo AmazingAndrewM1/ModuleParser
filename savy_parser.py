@@ -28,6 +28,7 @@ class Parser:
         self.tokens = self.tokenizer(expression)
         self.offset = ''
         self.expression()
+        print("___________________________________________________________________")
 
 
     def tokenizer(self, expression):
@@ -95,7 +96,6 @@ class Parser:
 
         left_node = self.negation()
         self.offset = self.offset[:-1]
-
 
         if len(self.tokens) > 0 and self.tokens[0] == '&':
             output_node = binaryNode(self.eat('&'))
