@@ -163,7 +163,14 @@ class TestSavyParser(unittest.TestCase):
             expected_num_cols,
             f"expected {expected_num_cols} cols, but got {actual_num_cols} cols instead."
         )
+
     
+    def test_populate_truth_table(self):
+        input = "A & B & C & D"
+        parser = Parser(input)
+        print(parser.variable_list)
+        print(parser.truth_table)
+
 
 if __name__ == '__main__':
     unittest.main()
