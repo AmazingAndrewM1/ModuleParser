@@ -3,29 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Stenneth, Andrew, Vijay and Yehuda's Truth Table solver</title>
-    <link rel="stylesheet" href="styles.css">
+    <title> SAVY's Truth Table solver</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to Stenneth, Andrew, Vijay and Yehuda's Truth Table solver</h1>
+        <h1>Welcome to SAVY's Truth Table solver</h1>
         <nav>
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#TruthTable">Truth Table Generator</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\Hackathon_2024.html">Truth Table Generator</a></li>
+                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\AboutUs.html">About</a></li>
+                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\Help.html">Help</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="main-content">
-        <h2>About Us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec justo ac libero tincidunt tincidunt.</p>
+        <h2>Truth Table Generator</h2>
+        <form action="/logic" method="POST"> <!-- Assuming you want to POST the data -->
+            <label for="userInput">Enter your logical expression here:</label>
+            <input type="text" id="userInput">
+            <button type="submit" onclick="displayUserInput()">Submit</button>
+            </form>
+                <p id="displayArea"></p>
+    
+            <script>
+            function displayUserInput() {
+                // Get the value from the input field
+                var userInput = document.getElementById('userInput').value;
+                
+                // Display the input value in the 'displayArea' paragraph
+                document.getElementById('displayArea').textContent = userInput;
+            }
+            </script>
+     
+     <table>
+        <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>A AND B</th>
+        </tr>
+        <tr>
+            <td>True</td>
+            <td>True</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>True</td>
+            <td>False</td>
+            <td>False</td>
+        </tr>
+        <tr>
+            <td>False</td>
+            <td>True</td>
+            <td>False</td>
+        </tr>
+        <tr>
+            <td>False</td>
+            <td>False</td>
+            <td>False</td>
+        </tr>
+    </table>
+            
     </section>
 
     <footer>
-        <p>&copy; 2024 My Modern Website</p>
+        <p>&copy; 2024 Stenneth, Andrew, Vijay and Yehuda's Truth Table solver</p>
     </footer>
 </body>
 </html>
