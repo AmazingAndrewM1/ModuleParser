@@ -1,3 +1,5 @@
+import numpy as np
+
 class leaf():
     def __init__(self, value):
         self.value = value
@@ -27,7 +29,8 @@ class Parser:
     def __init__(self, expression):
         self.tokens = self.tokenizer(expression)
         self.offset = ''
-        self.variable_set = self.unique_variable_tokens()
+        self.variable_list = self.unique_variable_tokens()
+        self.truth_table = self.create_truth_table()
         self.expression()
         if len(self.tokens) > 0:
             raise ValueError("The parser completed without reading all of the tokens")
@@ -67,8 +70,15 @@ class Parser:
 
     def unique_variable_tokens(self):
         variable_set = {var for var in self.tokens if (var.islower() or var.isupper())}
-        return variable_set
+        variable_list = list(variable_set)
+        return variable_list
+    
+    def create_truth_table(self):
+        truth_table = np.zeros((2 ** len(self.variable_list), len(self.variable_list) + 1))
+        return truth_table
 
+
+                            
 
     def eat(self, character):
         if len(self.tokens) == 0:

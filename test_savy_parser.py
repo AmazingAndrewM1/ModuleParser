@@ -98,7 +98,7 @@ class TestSavyParser(unittest.TestCase):
     def test_unique_variable_tokens(self):
         input = "A & (B | C)"
         parser = Parser(input)
-        actual_variable_list = parser.variable_set
+        actual_variable_list = parser.variable_list
         expected_variable_list = ['A', 'B', 'C']
         self.assertCountEqual(
             actual_variable_list,
@@ -109,14 +109,60 @@ class TestSavyParser(unittest.TestCase):
     def test_unique_variable_tokens2(self):
         input = "A & (B | A)"
         parser = Parser(input)
-        actual_variable_list = parser.variable_set
+        actual_variable_list = parser.variable_list
         expected_variable_list = ['B', 'A']
         self.assertCountEqual(
             actual_variable_list,
             expected_variable_list,
             f"expected {expected_variable_list}, but got {actual_variable_list} instead."
         )
-        
+
+    def test_truth_table_size(self):
+        input = "A & (B | A)"
+        parser = Parser(input)
+        truth_table = parser.truth_table
+        print(truth_table)
+
+        expected_num_rows = 4
+        expected_num_cols = 3
+
+        actual_num_rows, actual_num_cols = truth_table.shape
+
+        self.assertEqual(
+            actual_num_rows,
+            expected_num_rows,
+            f"expected {expected_num_rows} rows, but got {actual_num_rows} rows instead."
+        )
+
+        self.assertEqual(
+            actual_num_cols,
+            expected_num_cols,
+            f"expected {expected_num_cols} cols, but got {actual_num_cols} cols instead."
+        )
+
+
+    def test_truth_table_size(self):
+        input = "A & (B | A) | C & C <=> d"
+        parser = Parser(input)
+        truth_table = parser.truth_table
+        print(truth_table)
+
+        expected_num_rows = 16
+        expected_num_cols = 5
+
+        actual_num_rows, actual_num_cols = truth_table.shape
+
+        self.assertEqual(
+            actual_num_rows,
+            expected_num_rows,
+            f"expected {expected_num_rows} rows, but got {actual_num_rows} rows instead."
+        )
+
+        self.assertEqual(
+            actual_num_cols,
+            expected_num_cols,
+            f"expected {expected_num_cols} cols, but got {actual_num_cols} cols instead."
+        )
     
 
 if __name__ == '__main__':
