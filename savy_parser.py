@@ -27,6 +27,7 @@ class Parser:
     def __init__(self, expression):
         self.tokens = self.tokenizer(expression)
         self.offset = ''
+        self.variable_set = self.unique_variable_tokens()
         self.expression()
         if len(self.tokens) > 0:
             raise ValueError("The parser completed without reading all of the tokens")
@@ -62,6 +63,12 @@ class Parser:
         if conditional_flag != 0 or conditional_flag != 0:
             raise Exception(f"Invalid Syntax")
         return tokens 
+    
+
+    def unique_variable_tokens(self):
+        variable_set = {var for var in self.tokens if (var.islower() or var.isupper())}
+        return variable_set
+
 
     def eat(self, character):
         if len(self.tokens) == 0:
@@ -86,10 +93,10 @@ class Parser:
 
 
     def expression(self):
-        print(f"{self.offset}calling conjunction")
+        print(f"{self.offset}calling biconditional")
         self.offset = self.offset + '\t'
 
-        output_node = self.conjunction()
+        output_node = self.biconditional()
 
         self.offset = self.offset[:-1]
 
@@ -97,38 +104,96 @@ class Parser:
 
 
     def biconditional(self):
-        raise NotImplementedError("Biconditional function not yet implemented.")
+        print(f"{self.offset}calling conditional")
+        self.offset = self.offset + '\t'
+        left_node = self.conditional()
+        self.offset = self.offset[:-1]
+
+        while self.is_next('<=>'):
+            temp_node = binaryNode('')
+            temp_node.left_child = left_node
+            left_node = temp_node
+
+            print(self.tokens)
+            print(f"{self.offset}eating '<=>'")
+            left_node.value = self.eat('<=>')
+            
+            print(f"{self.offset}calling conditional")
+            self.offset = self.offset + '\t'
+            left_node.right_child = self.conditional()
+            self.offset = self.offset[:-1]
+            
+            print(f"{self.offset}the current node is {left_node.value} with a left child {left_node.left_child.value} and a right child {left_node.right_child.value}") 
+        return left_node
 
     def conditional(self):
-        raise NotImplementedError("Conditional function not yet implemented.")
+        print(f"{self.offset}calling disjunction")
+        self.offset = self.offset + '\t'
+        left_node = self.disjunction()
+        self.offset = self.offset[:-1]
+
+        while self.is_next('=>'):
+            temp_node = binaryNode('')
+            temp_node.left_child = left_node
+            left_node = temp_node
+
+            print(self.tokens)
+            print(f"{self.offset}eating '=>'")
+            left_node.value = self.eat('=>')
+            
+            print(f"{self.offset}calling disjunction")
+            self.offset = self.offset + '\t'
+            left_node.right_child = self.disjunction()
+            self.offset = self.offset[:-1]
+            
+            print(f"{self.offset}the current node is {left_node.value} with a left child {left_node.left_child.value} and a right child {left_node.right_child.value}") 
+        return left_node
 
     def disjunction(self):
-        raise NotImplementedError("Disjunction function not yet implemented.")
+        print(f"{self.offset}calling conjunction")
+        self.offset = self.offset + '\t'
+        left_node = self.conjunction()
+        self.offset = self.offset[:-1]
+
+        while self.is_next('|'):
+            temp_node = binaryNode('')
+            temp_node.left_child = left_node
+            left_node = temp_node
+
+            print(self.tokens)
+            print(f"{self.offset}eating '|'")
+            left_node.value = self.eat('|')
+            
+            print(f"{self.offset}calling conjunction")
+            self.offset = self.offset + '\t'
+            left_node.right_child = self.conjunction()
+            self.offset = self.offset[:-1]
+            
+            print(f"{self.offset}the current node is {left_node.value} with a left child {left_node.left_child.value} and a right child {left_node.right_child.value}") 
+        return left_node
 
     def conjunction(self):
         
         print(f"{self.offset}calling negation")
         self.offset = self.offset + '\t'
-
         left_node = self.negation()
         self.offset = self.offset[:-1]
 
         while self.is_next('&'):
+            temp_node = binaryNode('')
+            temp_node.left_child = left_node
+            left_node = temp_node
+
             print(self.tokens)
             print(f"{self.offset}eating '&'")
-            
-            output_node = binaryNode(self.eat('&'))
-            output_node.left_child = left_node
-            
+            left_node.value = self.eat('&')
             
             print(f"{self.offset}calling negation")
             self.offset = self.offset + '\t'
-
-            output_node.right_child = self.negation()
-            
+            left_node.right_child = self.negation()
             self.offset = self.offset[:-1]
-            print(f"{self.offset}the current node is {output_node.value} with a left child {output_node.left_child.value} and a right child {output_node.right_child.value}")
-            return output_node
+            
+            print(f"{self.offset}the current node is {left_node.value} with a left child {left_node.left_child.value} and a right child {left_node.right_child.value}") 
         return left_node
 
     def negation(self):
