@@ -28,6 +28,8 @@ class Parser:
         self.tokens = self.tokenizer(expression)
         self.offset = ''
         self.expression()
+        if len(self.tokens) > 0:
+            raise ValueError("The parser completed without reading all of the tokens")
         print("___________________________________________________________________")
 
 
@@ -67,7 +69,21 @@ class Parser:
         if self.tokens[0] != character:
             raise ValueError(f"Expected '{character}' but read '{self.tokens[0]}'")
         return self.tokens.pop(0)
-        
+    
+    def is_next(self, character):
+        if len(self.tokens) == 0:
+            return False
+        if self.tokens[0] != character:
+            return False
+        return True
+    
+    # checks if the next character is a var
+    def is_next_var(self):
+        if len(self.tokens) == 0:
+            print("THE TOKEN STRING IS EMPTY")
+            return False
+        return self.tokens[0].islower() or self.tokens[0].isupper()
+
 
     def expression(self):
         print(f"{self.offset}calling conjunction")
@@ -97,12 +113,13 @@ class Parser:
         left_node = self.negation()
         self.offset = self.offset[:-1]
 
-        if len(self.tokens) > 0 and self.tokens[0] == '&':
+        while self.is_next('&'):
+            print(self.tokens)
+            print(f"{self.offset}eating '&'")
+            
             output_node = binaryNode(self.eat('&'))
             output_node.left_child = left_node
             
-            print(self.tokens)
-            print(f"{self.offset}eating '&'")
             
             print(f"{self.offset}calling negation")
             self.offset = self.offset + '\t'
@@ -115,7 +132,8 @@ class Parser:
         return left_node
 
     def negation(self):
-        if self.tokens[0] == '!':
+        # Todo, try putting while to solve multiple negation bug
+        if self.is_next('!'):
             print(f"{self.offset}eating '!'")
             print(self.tokens)
             self.eat('!')
@@ -153,14 +171,14 @@ class Parser:
             return output_node
 
         
-        if self.tokens[0].islower() or self.tokens[0].isupper():
+        if self.is_next_var():
             #comment out when done
             print(self.tokens)
             print(f"{self.offset}eating '{self.tokens[0]}'")
             output_node = leaf(self.eat(self.tokens[0]))
             print(f"{self.offset}leaf node is {output_node.value}")
             return output_node
-        return output_node
+        raise ValueError('Malformed expression.')
 
 
 def main():

@@ -3,6 +3,14 @@ from savy_parser import *
 
 class TestSavyParser(unittest.TestCase):
 
+    def test_basic(self):
+        input = "(A)"
+        print("___________________________________________________________________")
+        print(input)
+        parser = Parser(input)
+
+    #Todo put in failure case
+    
     def test_conjunction(self):
         input = "(!A&B)"
         print("___________________________________________________________________")
