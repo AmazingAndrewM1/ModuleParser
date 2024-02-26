@@ -15,8 +15,8 @@ def logic():
         try:
             parseObject = savy_parser.Parser(userInput)
             print(parseObject.truth_table)
-        except (Exception, ValueError):
-            print("An error occurred.")
+        except (Exception, ValueError) as err:
+            print(err)
         return render_template("Hackathon_2024.html")
 
 
