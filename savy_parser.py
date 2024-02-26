@@ -3,13 +3,11 @@ import numpy as np
 class leaf():
     def __init__(self, value):
         self.value = value
-        self.bool = None
 
 
 class unaryNode():
     def __init__(self, value):
         self.value = value
-        self.bool = None
         self.child = None
 
     def setChild(child_node):
@@ -18,7 +16,6 @@ class unaryNode():
 class binaryNode():
     def __init__(self, value):
         self.value = value
-        self.bool = None
         self.left_child = None
         self.right_child = None
 
