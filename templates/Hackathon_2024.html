@@ -18,6 +18,10 @@
         </nav>
     </header>
 
+    {% if errorMessage is defined %}
+    <p id="error-message">{{errorMessage}}</p>
+    {% endif %}
+
     <section class="main-content">
         <h2>Truth Table Generator</h2>
         <form action="/logic" method="POST"> <!-- Assuming you want to POST the data -->
@@ -64,7 +68,13 @@
             <td>False</td>
         </tr>
     </table>
-            
+    {% if header is defined %}
+    <p id="header"> {{ header }} </p>
+    {% endif %}
+
+    {% if truthTable is defined %}
+    <p id="truth-table"> {{ truthTable }} </p>
+    {% endif %}        
     </section>
 
     <footer>

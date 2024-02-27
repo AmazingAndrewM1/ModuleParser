@@ -14,10 +14,15 @@ def logic():
         userInput = request.form["userInput"]
         try:
             parseObject = savy_parser.Parser(userInput)
-            print(parseObject.truth_table)
+            header = parseObject.variable_list
+            header.append("".join(parseObject.tokenizer(userInput)))
+            truthTable = parseObject.truth_table
         except (Exception, ValueError) as err:
-            print(err)
-        return render_template("Hackathon_2024.html")
+            errorMessage = str(err)
+            return render_template("Hackathon_2024.html", errorMessage=errorMessage)
+        return render_template("Hackathon_2024.html", 
+                               truthTable=truthTable,
+                               header=header)
 
 
 if __name__ == "__main__":
