@@ -11,9 +11,9 @@
         <h1>Welcome to SAVY's Truth Table solver</h1>
         <nav>
             <ul>
-                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\templates\Hackathon_2024.html">Truth Table Generator</a></li>
-                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\templates\AboutUs.html">About</a></li>
-                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\templates\Help.html">Contact</a></li>
+                <li><a href="{{ url_for("hackathon2024")}}">Truth Table Generator</a></li>
+                <li><a href="{{ url_for("about_us") }}">About</a></li>
+                <li><a href="{{ url_for("help") }}">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -21,7 +21,7 @@
     <section class="main-content">
         
         <h2>About Us</h2>
-        <img src="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\TCNJ1.jpg" alt="Photograph of TCNJ">
+        <img src="../staticFiles/TCNJ1.jpg" alt="Photograph of TCNJ">
         <p> Our Truth Table Solver is designed for educational use, specifically in the classes of Discrete Mathematics, 
             Discrete Structures, and Computer Architecture. 
             Our primary goal is to simplify the process for students who are relatively new to these fields, 
@@ -46,9 +46,9 @@
     <footer>
         <nav>
             <ul>
-                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\templates\Hackathon_2024.html">Truth Table Generator</a></li>
-                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\templates\AboutUs.html">About</a></li>
-                <li><a href="C:\Users\stenn\OneDrive\Desktop\Project101\ModuleParser\templates\Help.html">Contact</a></li>
+                <li><a href="{{ url_for("hackathon2024") }}">Truth Table Generator</a></li>
+                <li><a href="{{ url_for("about_us") }}">About</a></li>
+                <li><a href="{{ url_for("help") }}">Contact</a></li>
             </ul>
         </nav>
         <p>&copy; 2024 Stenneth, Andrew, Vijay and Yehuda's Truth Table solver</p>
