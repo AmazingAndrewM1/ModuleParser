@@ -11,6 +11,17 @@ app = Flask(__name__, static_folder="staticFiles")
 def index():
     return render_template("Hackathon_2024.html")
 
+@app.route("/hackathon2024")
+def hackathon2024():
+    return render_template("Hackathon_2024.html")
+
+@app.route("/about-us")
+def about_us():
+    return render_template("AboutUs.html")
+
+@app.route("/help")
+def help():
+    return render_template("Help.html")
 
 # Include other necessary Flask routes and functions here
 
