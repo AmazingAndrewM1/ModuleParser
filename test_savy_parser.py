@@ -121,7 +121,6 @@ class TestSavyParser(unittest.TestCase):
         input = "A & (B | A)"
         parser = Parser(input)
         truth_table = parser.truth_table
-        print(truth_table)
 
         expected_num_rows = 4
         expected_num_cols = 3
@@ -145,7 +144,6 @@ class TestSavyParser(unittest.TestCase):
         input = "A & (B | A) | C & C <=> d"
         parser = Parser(input)
         truth_table = parser.truth_table
-        print(truth_table)
 
         expected_num_rows = 16
         expected_num_cols = 5
@@ -168,8 +166,6 @@ class TestSavyParser(unittest.TestCase):
     def test_populate_truth_table(self):
         input = "A & B & C & D"
         parser = Parser(input)
-        print(parser.variable_list)
-        print(parser.truth_table)
 
 
 if __name__ == '__main__':

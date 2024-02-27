@@ -3,13 +3,11 @@ import numpy as np
 class leaf():
     def __init__(self, value):
         self.value = value
-        self.bool = None
 
 
 class unaryNode():
     def __init__(self, value):
         self.value = value
-        self.bool = None
         self.child = None
 
     def setChild(child_node):
@@ -18,7 +16,6 @@ class unaryNode():
 class binaryNode():
     def __init__(self, value):
         self.value = value
-        self.bool = None
         self.left_child = None
         self.right_child = None
 
@@ -35,10 +32,16 @@ class Parser:
         self.variable_list = self.unique_variable_tokens()
         self.truth_table = self.create_truth_table()
         self.populate_truth_table()
-        self.expression()
+        self.root = self.expression()
+        self.compute_truth_table()
         if len(self.tokens) > 0:
             raise ValueError("The parser completed without reading all of the tokens")
         print("___________________________________________________________________")
+        print(self.variable_list,end='')
+        print(expression)
+        print(self.truth_table)
+        print("___________________________________________________________________")
+
 
 
     def tokenizer(self, expression):
@@ -89,11 +92,38 @@ class Parser:
         for i, binary in enumerate(binary_numbers):
             for j, bit in enumerate(binary):
                 self.truth_table[i, j] = int(bit)
-        print(self.truth_table)
+
+    def compute_truth_table(self):
+        for index, binary_list in enumerate(self.truth_table):
+            result = self.traverse_tree(self.root, binary_list)
+            print(f"{index}th result is {result}")
+            self.truth_table[index, len(self.variable_list)] = result
+
     
+    def traverse_tree(self, root, binary_list):
+        node_value = root.value
 
+        if node_value.isupper() or node_value.islower():
+            variable_index = self.variable_list.index(node_value)
+            return binary_list[variable_index]
+        if node_value == ('!'):
+            child_bool_val = self.traverse_tree(root.child, binary_list)
+            print(f"!{child_bool_val} = {not child_bool_val}")
+            return not child_bool_val
+        if node_value == ('&'):
+            left_bool = self.traverse_tree(root.left_child, binary_list)
+            right_bool = self.traverse_tree(root.right_child, binary_list)
+            print(f"{left_bool} and {right_bool} = {left_bool and right_bool}")
+            return self.traverse_tree(root.left_child, binary_list) and self.traverse_tree(root.right_child, binary_list)
+        if node_value == ('|'):
+            return self.traverse_tree(root.left_child, binary_list) or self.traverse_tree(root.right_child, binary_list)
+        if node_value == ('=>'):
+            return not self.traverse_tree(root.left_child, binary_list) or self.traverse_tree(root.right_child, binary_list)
+        if node_value == ('<=>'):
+            return self.traverse_tree(root.left_child, binary_list) == self.traverse_tree(root.right_child, binary_list)
+        
 
-                            
+                           
 
     def eat(self, character):
         if len(self.tokens) == 0:
@@ -272,12 +302,9 @@ class Parser:
 
 
 def main():
-    input = "(!A&B)"
-    parser = Parser(input)
-
-
-
-
+    while True:
+        user_input = input()
+        Parser(user_input)
 
 
 
